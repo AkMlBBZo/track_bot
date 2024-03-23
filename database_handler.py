@@ -52,15 +52,27 @@ class BotDatabaseHandler:
         return self.session.commit()
 
     # Устанавливаем coords
-    def set_coords(self, coords, user_id):
-        way = self.session.query(Ways).filter_by(id=id).first()
+    def set_coords(self, coords, way_id):
+        way = self.session.query(Ways).filter_by(id=way_id).first()
         way.coords = json.dumps(coords)
+        return self.session.commit()
+
+    # Устанавливаем start_coords
+    def set_start_coords(self, coords, way_id):
+        way = self.session.query(Ways).filter_by(id=way_id).first()
+        way.start_coords = json.dumps(coords)
         return self.session.commit()
 
     # Устанавливаем message_id
     def set_message_id(self, message_id, user_id):
         user = self.session.query(User).filter_by(user_id=user_id).first()
         user.message_id = message_id
+        return self.session.commit()
+
+    # Устанавливаем select_route
+    def set_select_route(self, select_route, user_id):
+        user = self.session.query(User).filter_by(user_id=user_id).first()
+        user.select_route = select_route
         return self.session.commit()
 
     # Получаем select_route
@@ -80,6 +92,24 @@ class BotDatabaseHandler:
             .scalar()
         )
         return json.loads(coords)
+    
+    # Получаем start_coord
+    def get_start_coord(self, way_id):
+        coords = (
+            self.session.query(Ways.start_coords)
+            .filter(Ways.id == way_id)
+            .scalar()
+        )
+        return json.loads(coords)
+
+    # Получаем start_photo_path
+    def get_start_photo_path(self, way_id):
+        image_paths = (
+            self.session.query(Ways.start_photo_path)
+            .filter(Ways.id == way_id)
+            .scalar()
+        )
+        return image_paths
 
     # Получаем message_id
     def get_message_id(self, user_id):
