@@ -10,7 +10,8 @@ EXCEPTION_LOG = os.path.join(BASE_DIR, "exception.log")
 
 Bot_DB = BotDatabaseHandler("data.db")
 
-BOT_TOKEN = "6339387408:AAH-zrIxVltKRO2tyDkIbVOCf72H6wAlvog"
+# BOT_TOKEN = "6339387408:AAH-zrIxVltKRO2tyDkIbVOCf72H6wAlvog"
+BOT_TOKEN = "6591690689:AAFowjUboW1ZvmfiQNBhDDE6jQVTIzVhBqw"
 
 class TEXTS:
     START_MESSAGE = "Привет! Это бот - аудиогид по Ставрополю\n\nТебе необходимо выбрать экскурсию. Дальнейшее руководство получишь после выбора.\n(Все бесплатно)"
