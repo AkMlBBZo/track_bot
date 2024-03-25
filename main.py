@@ -15,7 +15,7 @@ dp = Dispatcher(bot, storage=storage)
 async def start(message: types.Message):
     await bot_functions.start_function(bot=bot,
                                        user_id=message.from_user.id)
-    
+
 @dp.callback_query_handler(state="*")
 async def callback_handler(callback_query: types.CallbackQuery, state: FSMContext):
     action = callback_query.data
