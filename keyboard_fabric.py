@@ -8,7 +8,6 @@ import functions
 def start_keyboard():
     buttons = list()
     ways = settings.Bot_DB.get_way_names()
-    print(ways)
     for way in ways:
         buttons.append(
             types.InlineKeyboardButton(
@@ -20,6 +19,32 @@ def start_keyboard():
     keyboard.add(*buttons)
     return keyboard
 
+
+def confirm_way_keyboard(user_id):
+    buttons = list()
+    way = settings.Bot_DB.get_select_route(user_id)
+    buttons.append(
+        types.InlineKeyboardButton(
+            text = settings.BUTTON_TEXTS.CONFIRM_LOCATION,
+            callback_data = f'{settings.ACTIONS.CONFIRM_LOCATION}{way}'
+        )
+    )
+    keyboard = types.InlineKeyboardMarkup(row_width=1)
+    keyboard.add(*buttons)
+    return keyboard
+
+def confirm_listened_keyboard(user_id):
+    buttons = list()
+    way = settings.Bot_DB.get_select_route(user_id)
+    buttons.append(
+        types.InlineKeyboardButton(
+            text = settings.BUTTON_TEXTS.CONFIRM_LISTENED,
+            callback_data = f'{settings.ACTIONS.CONFIRM_LISTENED}{way}'
+        )
+    )
+    keyboard = types.InlineKeyboardMarkup(row_width=1)
+    keyboard.add(*buttons)
+    return keyboard
 
 def universal_keyboard(keyboard, row_width=1):
     buttons = list()

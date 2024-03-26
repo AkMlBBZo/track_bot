@@ -93,6 +93,14 @@ class BotDatabaseHandler:
         )
         return json.loads(coords)
     
+    def get_texts(self, way_id):
+        texts = (
+            self.session.query(Ways.coords)
+            .filter(Ways.id == way_id)
+            .scalar()
+        )
+        return texts
+    
     # Получаем start_coord
     def get_start_coord(self, way_id):
         coords = (
@@ -106,6 +114,14 @@ class BotDatabaseHandler:
     def get_start_photo_path(self, way_id):
         image_paths = (
             self.session.query(Ways.start_photo_path)
+            .filter(Ways.id == way_id)
+            .scalar()
+        )
+        return image_paths
+    
+    def get_photo_path(self, way_id):
+        image_paths = (
+            self.session.query(Ways.photo_paths)
             .filter(Ways.id == way_id)
             .scalar()
         )
@@ -124,6 +140,14 @@ class BotDatabaseHandler:
     def get_way_names(self):
         ways = self.session.query(Ways).all()
         return ways
+    
+    def get_voice_path(self, way_id):
+        # path = self.session.query(Ways.audio_paths).all()
+        path = (self.session.query(Ways.audio_paths)
+            .filter(Ways.id == way_id)
+            .scalar()
+        )
+        return path
 
     # Удаляем пользователя
     def delete_user(self, user_id):

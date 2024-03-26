@@ -111,3 +111,16 @@ async def send_location(bot, chat_id, coord, reply_markup = None):
         EXCEPTION_WRITE(e)
         msg_id = 0
     return msg_id
+
+async def send_audio(bot, chat_id, audio, reply_markup = None):
+    try:
+        msg = await bot.send_audio(
+            chat_id=chat_id,
+            audio=audio,
+            reply_markup=reply_markup
+        )
+        msg_id = msg.message_id
+    except Exception as e:
+        EXCEPTION_WRITE(e)
+        msg_id = 0
+    return msg_id
