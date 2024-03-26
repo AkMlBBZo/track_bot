@@ -1,5 +1,5 @@
 # В последнем комите дополнена(ы)/добавлена(ы):
-1. таблица ways: texts, photo_paths, audio_paths;
+1. таблица ways: texts, photo_paths, audio_paths;\
               функции: get_texts, get_photo_path, get_voice_path 
 3. функции confirm_listened и связующие
 4. Простая проверка существования данных в колонках выше
