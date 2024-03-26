@@ -27,3 +27,4 @@ class ACTIONS:
 class BUTTON_TEXTS:
     START_WAY = "Начать экскурсию"
     MAIN_MENU = "В меню"
+    
