@@ -30,6 +30,7 @@ class Ways(Base):
     audio_paths = Column(String, default="[]")
     start_photo_path = Column(String, default="[]")
     start_coords = Column(String, default="[]")
+    cities = Column(Integer, default=-1)
 
 class BotDatabaseHandler:
     # Создаем подключение к базе данных и сессию, создаем таблицу, если ее нет
@@ -85,13 +86,21 @@ class BotDatabaseHandler:
         return select_route
 
     # Получаем coords
-    def get_coords(self, id):
+    def get_coords(self, way_id):
         coords = (
             self.session.query(Ways.coords)
-            .filter(Ways.id == id)
+            .filter(Ways.id == way_id)
             .scalar()
         )
         return json.loads(coords)
+    
+    def get_texts(self, way_id):
+        texts = (
+            self.session.query(Ways.texts)
+            .filter(Ways.id == way_id)
+            .scalar()
+        )
+        return json.loads(texts)
     
     # Получаем start_coord
     def get_start_coord(self, way_id):
@@ -109,7 +118,15 @@ class BotDatabaseHandler:
             .filter(Ways.id == way_id)
             .scalar()
         )
-        return image_paths
+        return json.loads(image_paths)
+    
+    def get_photo_path(self, way_id):
+        image_paths = (
+            self.session.query(Ways.photo_paths)
+            .filter(Ways.id == way_id)
+            .scalar()
+        )
+        return json.loads(image_paths)
 
     # Получаем message_id
     def get_message_id(self, user_id):
@@ -124,12 +141,37 @@ class BotDatabaseHandler:
     def get_way_names(self):
         ways = self.session.query(Ways).all()
         return ways
+    
+    def get_audio_paths(self, way_id):
+        # path = self.session.query(Ways.audio_paths).all()
+        path = (self.session.query(Ways.audio_paths)
+            .filter(Ways.id == way_id)
+            .scalar()
+        )
+        return json.loads(path)
 
     # Удаляем пользователя
     def delete_user(self, user_id):
         user = self.session.query(User).filter_by(user_id=user_id).first()
         self.session.delete(user)
         return self.session.commit()
+    
+
+    def add_way(self, way_id, name="...", coords=[0, 0], texts=["..."], photo_paths=[], audio_paths=[], start_photo_path=[], start_coords=[0, 0], cities=-1):
+        way = Ways(id=way_id, 
+                   name=name, 
+                   coords=coords, 
+                   texts=texts, 
+                   photo_paths=photo_paths, 
+                   audio_paths=audio_paths, 
+                   start_photo_path=start_photo_path,
+                   start_coords=start_coords,
+                   cities=cities)
+        self.session.add(way)
+        return self.session.commit()
+                
+
+
 
     # Закрываем соединение
     def close(self):

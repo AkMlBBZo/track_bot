@@ -11,11 +11,15 @@ storage = MemoryStorage()
 
 dp = Dispatcher(bot, storage=storage)
 
+# storage.get_data()
+
 @dp.message_handler(commands=['start'], state="*")
 async def start(message: types.Message):
     await bot_functions.start_function(bot=bot,
                                        user_id=message.from_user.id)
-    
+
+
+
 @dp.callback_query_handler(state="*")
 async def callback_handler(callback_query: types.CallbackQuery, state: FSMContext):
     action = callback_query.data
@@ -25,12 +29,18 @@ async def callback_handler(callback_query: types.CallbackQuery, state: FSMContex
         await bot_functions.start_function(bot=bot,
                                        user_id=user_id)
 
+    elif action == settings.ACTIONS.CONFIRM_LISTENED:                                                                               
+        await bot_functions.confirm_way_function(bot=bot,
+                                                 user_id=user_id)           
+
     elif settings.ACTIONS.SELECT_WAY in action:
         await bot_functions.select_way_function(bot=bot,
-                  user_id=user_id,
-                  action=action)
-                                                                                                              
+                                                user_id=user_id,
+                                                action=action)
 
+    elif settings.ACTIONS.CONFIRM_LOCATION in action:
+        await bot_functions.confirm_way_function(bot=bot,
+                                                 user_id=user_id)               
     
 
 if __name__ == "__main__":
