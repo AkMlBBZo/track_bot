@@ -1,5 +1,6 @@
 import functions
 import keyboards
+from main import storage
 import keyboard_fabric
 import settings
 
@@ -29,10 +30,11 @@ async def select_way_function(bot, user_id, action):
     way_id = int( action.replace( settings.ACTIONS.SELECT_WAY, "" ) )
     
     keyboard = keyboard_fabric.confirm_way_keyboard(user_id)
-    # print(keyboard)
     text = settings.TEXTS.BEFORE_WAY_MESSAGE
     image_path = settings.Bot_DB.get_start_photo_path(way_id=way_id)
     coord = settings.Bot_DB.get_start_coord(way_id=way_id)
+    coords = settings.Bot_DB.get_coords(way_id=way_id)
+    print(len(coords), coords)
 
     await functions.send_location(
         bot=bot,
@@ -55,8 +57,8 @@ async def select_way_function(bot, user_id, action):
     #     reply_markup=keyboard
     # )
 
-    settings.Bot_DB.set_message_id(message_id=message_id, user_id=user_id)
     settings.Bot_DB.set_select_route(select_route=way_id, user_id=user_id)
+    settings.Bot_DB.set_message_id(message_id=message_id, user_id=user_id)
     return
 
 async def confirm_way_function(bot, user_id, action):
@@ -64,46 +66,71 @@ async def confirm_way_function(bot, user_id, action):
     way_id = int( action.replace( settings.ACTIONS.CONFIRM_LOCATION, "" ) )
     # keyboard_message = keyboard_fabric.confirm_way_keyboard(user_id)
     keyboard_audio = keyboard_fabric.confirm_listened_keyboard(user_id)
-    audio_path = settings.Bot_DB.get_voice_path(way_id=way_id)
+    audio_path = settings.Bot_DB.get_audio_paths(way_id=way_id)
     image_url = settings.Bot_DB.get_photo_path(way_id=way_id)
     text = settings.Bot_DB.get_texts(way_id=way_id)
 
-    if image_url != None:
-        await functions.send_photo(
-            bot=bot,
-            chat_id=user_id,
-            image_url=image_url,
-            caption=text,
-            # reply_markup=keyboard_audio,
-        )
+    len_way = len(settings.Bot_DB.get_coords(way_id=way_id))
+    try:
+        data = await storage.get_data(chat=user_id, user=user_id)
+        data['pos_coords']
+        print('Good')
+    except:
+        await storage.set_data(chat=user_id, user=user_id, data={"pos_coords": 0})
+        data = await storage.get_data(chat=user_id, user=user_id)
+        print('Error')
 
-    if audio_path != None:
-        audio = open(audio_path, "rb").read()
-        message = await functions.send_message(
-            bot=bot,
-            chat_id=user_id,
-            text="<i>Отправляю аудио файл...</i>",
-            parse_mode='HTML'
-        )
+    if data['pos_coords'] != len_way:
+        if image_url != None:
+            await functions.send_photo(
+                bot=bot,
+                chat_id=user_id,
+                image_url=image_url[data['pos_coords']],
+                caption=text[data['pos_coords']],
+                # reply_markup=keyboard_audio,
+            )
+        
+        else:
+            await functions.send_message(
+                bot=bot,
+                chat_id=user_id,
+                text="<i>У этого объекта нет фотографии.</i>",
+            )
 
-        message_id = await functions.send_audio(
-            bot=bot,
-            chat_id=user_id,
-            audio=audio,
-            reply_markup=keyboard_audio,
-        )
+        if audio_path:
+            audio = open(audio_path[data['pos_coords']], "rb").read()
+            message = await functions.send_message(
+                bot=bot,
+                chat_id=user_id,
+                text="<i>Отправляю аудио файл...</i>",
+                parse_mode='HTML'
+            )
 
-        await functions.delete_message(
-            bot=bot,
-            chat_id=user_id,
-            message_id=message
-        )
+            message_id = await functions.send_audio(
+                bot=bot,
+                chat_id=user_id,
+                audio=audio,
+                reply_markup=keyboard_audio,
+            )
 
+            await functions.delete_message(
+                bot=bot,
+                chat_id=user_id,
+                message_id=message
+            )
+
+        else:
+            message_id = await functions.send_message(
+                bot=bot,
+                chat_id=user_id,
+                text="<i>У этого объекта нет аудиофайла.</i>",
+            )
+        await storage.update_data(chat=user_id, user=user_id, data={"pos_coords": data['pos_coords']+1})
     else:
         message_id = await functions.send_message(
-            bot=bot,
-            chat_id=user_id,
-            text="<i>У этого объекта нет аудиофайла.</i>",
+            bot=bot, 
+            chat_id=user_id, 
+            text="Вы закончили данный маршрут!"
         )
 
     

@@ -11,10 +11,14 @@ storage = MemoryStorage()
 
 dp = Dispatcher(bot, storage=storage)
 
+# storage.get_data()
+
 @dp.message_handler(commands=['start'], state="*")
 async def start(message: types.Message):
     await bot_functions.start_function(bot=bot,
                                        user_id=message.from_user.id)
+
+
 
 @dp.callback_query_handler(state="*")
 async def callback_handler(callback_query: types.CallbackQuery, state: FSMContext):
@@ -36,8 +40,10 @@ async def callback_handler(callback_query: types.CallbackQuery, state: FSMContex
                                                  action=action)               
 
     elif settings.ACTIONS.CONFIRM_LISTENED in action:
-        await callback_query.message.answer('Вы прослушали аудио!')                                                                                           
-
+        await callback_query.message.answer('Давайте пройдём дальше...')                                                                                           
+        await bot_functions.confirm_way_function(bot=bot,
+                                                 user_id=user_id,
+                                                 action=action)           
     
 
 if __name__ == "__main__":

@@ -39,7 +39,7 @@ def confirm_listened_keyboard(user_id):
     buttons.append(
         types.InlineKeyboardButton(
             text = settings.BUTTON_TEXTS.CONFIRM_LISTENED,
-            callback_data = f'{settings.ACTIONS.CONFIRM_LISTENED}{way}'
+            callback_data = f'{settings.ACTIONS.CONFIRM_LOCATION}{way}'
         )
     )
     keyboard = types.InlineKeyboardMarkup(row_width=1)
@@ -58,4 +58,3 @@ def universal_keyboard(keyboard, row_width=1):
     keyboard = types.InlineKeyboardMarkup(row_width=row_width)
     keyboard.add(*buttons)
     return keyboard
-                

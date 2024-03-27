@@ -1,3 +1,27 @@
+Can not serialize value type: <class 'list'>
+ headers: {}
+ value: ['https://clck.ru/39fapY', 'https://clck.ru/39fapY', 'https://clck.ru/39fapY']
+
+
+Message is not modified: specified new message content and reply markup are exactly the same as a current content and reply markup of the message
+
+
+Message is not modified: specified new message content and reply markup are exactly the same as a current content and reply markup of the message
+
+
+Can not serialize value type: <class 'list'>
+ headers: {}
+ value: ['https://clck.ru/39fapY', 'https://clck.ru/39fapY', 'https://clck.ru/39fapY']
+
+
+Message is not modified: specified new message content and reply markup are exactly the same as a current content and reply markup of the message
+
+
+Can not serialize value type: <class 'list'>
+ headers: {}
+ value: ['https://clck.ru/39fapY', 'https://clck.ru/39fapY', 'https://clck.ru/39fapY']
+
+
 Message is not modified: specified new message content and reply markup are exactly the same as a current content and reply markup of the message
 
 
@@ -8,6 +32,34 @@ Message is not modified: specified new message content and reply markup are exac
 
 
 Message is not modified: specified new message content and reply markup are exactly the same as a current content and reply markup of the message
+
+
+Message is not modified: specified new message content and reply markup are exactly the same as a current content and reply markup of the message
+
+
+Can not serialize value type: <class 'int'>
+ headers: {}
+ value: 73
+
+
+Can not serialize value type: <class 'int'>
+ headers: {}
+ value: 73
+
+
+Can not serialize value type: <class 'int'>
+ headers: {}
+ value: 73
+
+
+Can not serialize value type: <class 'int'>
+ headers: {}
+ value: 73
+
+
+Can not serialize value type: <class 'int'>
+ headers: {}
+ value: 73
 
 
 Message is not modified: specified new message content and reply markup are exactly the same as a current content and reply markup of the message
