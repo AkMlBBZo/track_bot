@@ -29,6 +29,10 @@ async def callback_handler(callback_query: types.CallbackQuery, state: FSMContex
         await bot_functions.start_function(bot=bot,
                                        user_id=user_id)
 
+    elif action == settings.ACTIONS.CONFIRM_LISTENED:                                                                               
+        await bot_functions.confirm_way_function(bot=bot,
+                                                 user_id=user_id)           
+
     elif settings.ACTIONS.SELECT_WAY in action:
         await bot_functions.select_way_function(bot=bot,
                                                 user_id=user_id,
@@ -36,14 +40,7 @@ async def callback_handler(callback_query: types.CallbackQuery, state: FSMContex
 
     elif settings.ACTIONS.CONFIRM_LOCATION in action:
         await bot_functions.confirm_way_function(bot=bot,
-                                                 user_id=user_id,
-                                                 action=action)               
-
-    elif settings.ACTIONS.CONFIRM_LISTENED in action:
-        await callback_query.message.answer('Давайте пройдём дальше...')                                                                                           
-        await bot_functions.confirm_way_function(bot=bot,
-                                                 user_id=user_id,
-                                                 action=action)           
+                                                 user_id=user_id)               
     
 
 if __name__ == "__main__":
