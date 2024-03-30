@@ -141,7 +141,9 @@ async def confirm_way_function(bot, user_id):
             text="Вы закончили данный маршрут!",
             reply_markup=keyboard
         )
-        await storage.update_data(chat=user_id, user=user_id, data={})
+        print(await storage.get_data(chat=user_id, user=user_id))
+        await storage.update_data(chat=user_id, user=user_id, data={"step": 0})
+        print(await storage.get_data(chat=user_id, user=user_id))
 
     
     if not(settings.Bot_DB.user_exist(user_id=user_id)):

@@ -11,13 +11,26 @@ audio_paths = json.dumps(["plug.mp3", "plug.mp3", "plug.mp3"], ensure_ascii=Fals
 start_photo_path = json.dumps("https://clck.ru/39hiRi", ensure_ascii=False)
 start_coord = json.dumps([45.023507, 41.896176], ensure_ascii=False)
 cities = json.dumps(settings.cities_dict.get(1), ensure_ascii=False)
-# print(coords)
-# print(texts)
-# print(photo_paths)
-# print(audio_paths)
-# print(start_coord)
-# print(start_photo_path)
+
 settings.Bot_DB.add_way(way_id=2, name=name, coords=coords, texts=texts, 
+                        
+                        photo_paths=photo_paths, audio_paths=audio_paths,
+
+                        start_photo_path=start_photo_path, 
+                        
+                        start_coords=start_coord, cities=cities)
+
+
+name = json.dumps("СКФУ", ensure_ascii=False)
+coords = json.dumps([[45.0428270, 41.9643760]], ensure_ascii=False)
+texts = json.dumps(["Северо-Кавказский федеральный университет"], ensure_ascii=False)
+photo_paths = json.dumps(["https://clck.ru/39kTu6"], ensure_ascii=False)
+audio_paths = json.dumps(["skfu.wav"], ensure_ascii=False)
+start_photo_path = json.dumps("https://clck.ru/39kU42", ensure_ascii=False)
+start_coord = json.dumps([45.0428270, 41.9643760], ensure_ascii=False)
+cities = json.dumps(settings.cities_dict.get(1), ensure_ascii=False)
+
+settings.Bot_DB.add_way(way_id=1, name=name, coords=coords, texts=texts, 
                         
                         photo_paths=photo_paths, audio_paths=audio_paths,
 
