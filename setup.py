@@ -1,3 +1,3 @@
 import os
 
-os.system("pip install -r requirements.txt")
+os.system(f"pip install -r requiments.txt")
