@@ -19,6 +19,9 @@ dp = Dispatcher(bot, storage=storage)
 async def start(message: types.Message):
     await bot_functions.start_function(bot=bot,
                                        user_id=message.from_user.id)
+    
+    with open("debug_user.csv", "a") as f:
+        f.write(f"{message.from_user.id}; {message.from_user.username}; {TimeNow.get_today()} {TimeNow.get_time()}; -\n")
 
 
 
