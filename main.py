@@ -21,7 +21,7 @@ async def start(message: types.Message):
                                        user_id=message.from_user.id)
     
     with open("debug_user.csv", "a") as f:
-        f.write(f"{message.from_user.id}; {message.from_user.username}; {TimeNow.get_today()} {TimeNow.get_time()}; -\n")
+        f.write(f"{message.from_user.id}; {message.from_user.username}; {TimeNow.get_today()} {TimeNow.get_time()}; type start\n")
 
 
 
