@@ -28,7 +28,7 @@ async def callback_handler(callback_query: types.CallbackQuery, state: FSMContex
     user_id = callback_query.from_user.id
 
     with open("debug_user.csv", "a") as f:
-        f.write(f"{user_id}; {callback_query.from_user.username}; {TimeNow.get_today()} {TimeNow.get_time()}\n")
+        f.write(f"{user_id}; {callback_query.from_user.username}; {TimeNow.get_today()} {TimeNow.get_time()}; {action}\n")
     
     if action == settings.ACTIONS.MAIN_MENU:
         await bot_functions.start_function(bot=bot,
